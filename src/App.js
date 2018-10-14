@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CloudSnow, Droplet, Snow, Sun } from 'react-feather';
+import { Cloud, CloudDrizzle, CloudLightning, CloudRain, CloudSnow, Sun } from 'react-feather';
 import './App.css';
 import { myConfig } from './config';
 
@@ -38,35 +38,47 @@ class App extends Component {
     }
 
     return(
-      <div className='main-weather level is-mobile'>
-        <div className='subtitle is-2' style={{ margin: '.5rem' }}>
+      <div className='main-weather'>
+        {this.renderWeatherIcon()}
+        <div className='title is-2'>
           {this.state.dataSource.main.temp}&deg;C
         </div>
-        {this.renderWeatherIcon()}
+        <div className='subtitle is-4'>
+          {this.state.dataSource.weather[0].main}
+        </div>
       </div>
     );
   }
 
   renderWeatherIcon() {
-    if (this.state.dataSource.weather[0].main.toLowerCase() === 'clear') {
+    const weatherName = this.state.dataSource.weather[0].main.toLowerCase();
+    if (weatherName === 'clear') {
       return <Sun />;
     }
-    else if (this.state.dataSource.weather[0].main.toLowerCase().includes('drizzle') ||
-      this.state.dataSource.weather[0].main.toLowerCase().includes('rain')) {
-        return <Droplet />;
+    else if (weatherName.includes('drizzle')) {
+      return <CloudDrizzle />;
+    } 
+    else if (weatherName.includes('rain')) {
+      return <CloudRain />;
     }
-    else if (this.state.dataSource.weather[0].main.toLowerCase().includes('snow')) {
+    else if (weatherName === 'clouds') {
+      return <Cloud />;
+    }
+    else if (weatherName.includes('snow')) {
       return <CloudSnow />;
     }
+    else if (weatherName.includes('thunder')) {
+      return <CloudLightning />;
+    }
     else { 
-      return <div>{this.state.dataSource.weather[0]}</div>;
+      return;
     }
   }
 
   render() {
     return (
       <div className='App'>
-        <div className='container is-fluid'>
+        <div className='container'>
           {this.renderCurrentWeather()}
         </div>
       </div>
