@@ -34,7 +34,9 @@ class App extends Component {
 
   renderCurrentWeather() {
     if (!this.state.loaded) {
-      return 'Loading ...';
+      return (
+        <span className='loader is-size-2' />
+      );
     }
 
     return(
@@ -78,9 +80,7 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <div className='container'>
-          {this.renderCurrentWeather()}
-        </div>
+        {this.renderCurrentWeather()}
       </div>
     );
   }
